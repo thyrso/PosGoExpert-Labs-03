@@ -1,0 +1,36 @@
+# Binários
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+service-a/service-a
+service-b/service-b
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+docs/

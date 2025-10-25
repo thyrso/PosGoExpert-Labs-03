@@ -1,0 +1,102 @@
+# Exemplos de Requisições - Sistema de Temperatura por CEP
+
+## Teste 1: CEP válido - São Paulo
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "01310100"
+}
+
+###
+
+## Teste 2: CEP válido - Rio de Janeiro
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "20040020"
+}
+
+###
+
+## Teste 3: CEP válido - Belo Horizonte
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "30130100"
+}
+
+###
+
+## Teste 4: CEP válido - Salvador
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "40020000"
+}
+
+###
+
+## Teste 5: CEP válido - Linhares/ES
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "29902555"
+}
+
+###
+
+## Teste 6: CEP inválido - menos de 8 dígitos
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "123"
+}
+
+###
+
+## Teste 7: CEP inválido - mais de 8 dígitos
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "123456789"
+}
+
+###
+
+## Teste 8: CEP inválido - contém letras
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "0131010a"
+}
+
+###
+
+## Teste 9: CEP não encontrado
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "99999999"
+}
+
+###
+
+## Comandos cURL equivalentes:
+
+# CEP válido
+# curl -X POST http://localhost:8080 -H "Content-Type: application/json" -d '{"cep": "01310100"}'
+
+# CEP inválido (formato)
+# curl -X POST http://localhost:8080 -H "Content-Type: application/json" -d '{"cep": "123"}'
+
+# CEP não encontrado
+# curl -X POST http://localhost:8080 -H "Content-Type: application/json" -d '{"cep": "99999999"}'
