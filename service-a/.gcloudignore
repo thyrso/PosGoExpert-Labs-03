@@ -1,0 +1,64 @@
+# Git files
+
+.git/
+.gitignore
+
+# Documentation
+
+README.md
+DEPLOY.md
+\*.md
+
+# Local development
+
+docker-compose.yaml
+Dockerfile.local
+.env
+.env.local
+
+# Testing
+
+test.ps1
+test.sh
+\*\_test.go
+tests/
+
+# Other services (will be ignored when building each service)
+
+service-a/
+service-b/
+
+# Build artifacts
+
+_.exe
+_.dll
+_.so
+_.dylib
+
+# IDE files
+
+.vscode/
+.idea/
+_.swp
+_.swo
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Logs
+
+\*.log
+logs/
+
+# Deployment scripts
+
+deploy-_.sh
+deploy-_.ps1
+cloudbuild-\*.yaml
+
+# Zipkin and OTEL configs
+
+zipkin/
+otel-collector-config.yaml

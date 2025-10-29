@@ -192,9 +192,54 @@ Para parar e remover volumes:
 docker-compose down -v
 ```
 
+## ☁️ Deploy na Nuvem (Google Cloud Run)
+
+### URLs em Produção
+
+🌐 **Sistema em funcionamento**:
+
+- **Service A (Endpoint Principal)**: https://service-a-l4yml3h6pq-uc.a.run.app
+- **Service B (Interno)**: https://service-b-l4yml3h6pq-uc.a.run.app
+
+### Exemplo de uso em produção:
+
+```bash
+curl -X POST https://service-a-l4yml3h6pq-uc.a.run.app \
+  -H "Content-Type: application/json" \
+  -d '{"cep": "01310100"}'
+```
+
+### Como fazer deploy
+
+1. **Instale o Google Cloud SDK**:
+
+   ```bash
+   # https://cloud.google.com/sdk/docs/install
+   ```
+
+2. **Faça login e configure o projeto**:
+
+   ```bash
+   gcloud auth login
+   gcloud config set project SEU_PROJECT_ID
+   ```
+
+3. **Execute o script de deploy**:
+
+   ```bash
+   # Linux/Mac
+   chmod +x deploy-to-gcp.sh
+   ./deploy-to-gcp.sh
+
+   # Windows PowerShell
+   .\deploy-to-gcp.ps1
+   ```
+
+**Nota**: Edite os scripts `deploy-to-gcp.sh` ou `deploy-to-gcp.ps1` e substitua `your-project-id` pelo seu PROJECT_ID do Google Cloud.
+
 ## 📈 Monitoramento e Debugging
 
-### Logs dos serviços
+### Logs dos serviços (Local)
 
 ```bash
 # Ver logs do Serviço A
@@ -207,8 +252,22 @@ docker logs service-b -f
 docker logs otel-collector -f
 ```
 
+### Logs na nuvem (Google Cloud)
+
+```bash
+# Ver logs do Service A na nuvem
+gcloud logs read "resource.type=cloud_run_revision AND resource.labels.service_name=service-a" --limit 50
+
+# Ver logs do Service B na nuvem
+gcloud logs read "resource.type=cloud_run_revision AND resource.labels.service_name=service-b" --limit 50
+```
+
 ### Verificar saúde dos containers
 
 ```bash
+# Local
 docker-compose ps
+
+# Nuvem
+gcloud run services list
 ```

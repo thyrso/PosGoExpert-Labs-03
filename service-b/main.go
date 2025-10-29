@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"time"
 
@@ -58,12 +59,14 @@ const weatherAPIKey = "d0edf6c5fae941a186395634250810" // Você pode usar essa c
 func main() {
 	ctx := context.Background()
 
-	// Inicializa o tracing
+	// Inicializa o tracing (opcional para Cloud Run)
 	shutdown, err := initTracer(ctx)
 	if err != nil {
-		log.Fatalf("Failed to initialize tracer: %v", err)
+		log.Printf("Warning: Failed to initialize tracer: %v", err)
+		log.Println("Running without OpenTelemetry tracing")
+	} else {
+		defer shutdown(ctx)
 	}
-	defer shutdown(ctx)
 
 	tracer = otel.Tracer("service-b")
 
@@ -76,9 +79,16 @@ func main() {
 }
 
 func initTracer(ctx context.Context) (func(context.Context) error, error) {
-	conn, err := grpc.DialContext(ctx, "otel-collector:4317",
+	// No Cloud Run, pode não ter OTEL Collector
+	otelEndpoint := os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
+	if otelEndpoint == "" {
+		otelEndpoint = "otel-collector:4317" // fallback para Docker local
+	}
+
+	conn, err := grpc.DialContext(ctx, otelEndpoint,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithBlock(),
+		grpc.WithTimeout(5*time.Second), // timeout para Cloud Run
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create gRPC connection to collector: %w", err)
