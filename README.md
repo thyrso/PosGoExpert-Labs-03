@@ -2,6 +2,13 @@
 
 Sistema distribuído em Go que recebe um CEP, identifica a cidade e retorna o clima atual (temperatura em graus Celsius, Fahrenheit e Kelvin) com implementação completa de OpenTelemetry e Zipkin para tracing distribuído.
 
+## 🌐 Acesso em Produção
+
+- Endpoint principal (Service A): https://service-a-l4yml3h6pq-uc.a.run.app
+- Endpoint interno (Service B): https://service-b-l4yml3h6pq-uc.a.run.app
+
+O endpoint principal (`POST /`) já pode ser testado diretamente com ferramentas como `curl`, Postman ou Insomnia.
+
 ## 📋 Arquitetura
 
 O sistema é composto por dois serviços principais:
